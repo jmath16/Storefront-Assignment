@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Sign Up - Jason's Kicks</title>
 
     <!-- Bootstrap CSS -->
@@ -25,24 +23,18 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
         <div class="container">
-
-            <a class="navbar-brand" href="index.html">
-                Jason's Kicks
-            </a>
+            <a class="navbar-brand" href="index.html">Jason's Kicks</a>
 
             <div class="navbar-nav">
                 <a class="nav-link" href="index.html">Home</a>
                 <a class="nav-link active" href="signup.html">Sign Up</a>
             </div>
-
         </div>
     </nav>
 
     <!-- Main Content -->
     <main class="container my-5">
-
         <div class="row justify-content-center">
-
             <div class="col-md-6">
 
                 <h2 class="text-center mb-4">User Signup</h2>
@@ -51,82 +43,43 @@
 
                     <!-- Username -->
                     <div class="mb-3">
-                        <label for="username" class="form-label">
-                            Username:
-                        </label>
-
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="username"
-                            placeholder="Enter username">
+                        <label for="username" class="form-label">Username:</label>
+                        <input type="text" class="form-control" id="username" placeholder="Enter username">
                     </div>
 
                     <!-- Email -->
                     <div class="mb-3">
-                        <label for="email" class="form-label">
-                            Email:
-                        </label>
-
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="email"
-                            placeholder="Enter email">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="text" class="form-control" id="email" placeholder="Enter email">
                     </div>
 
                     <!-- Password -->
                     <div class="mb-3">
-                        <label for="password" class="form-label">
-                            Password:
-                        </label>
-
-                        <input
-                            type="password"
-                            class="form-control"
-                            id="password"
-                            placeholder="Enter password">
+                        <label for="password" class="form-label">Password:</label>
+                        <input type="password" class="form-control" id="password" placeholder="Enter password">
                     </div>
 
                     <!-- Confirm Password -->
                     <div class="mb-3">
-                        <label for="confirmPassword" class="form-label">
-                            Confirm Password:
-                        </label>
-
-                        <input
-                            type="password"
-                            class="form-control"
-                            id="confirmPassword"
-                            placeholder="Confirm password">
+                        <label for="confirmPassword" class="form-label">Confirm Password:</label>
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password">
                     </div>
 
                     <!-- Sign Up Button -->
-                    <button
-                        type="submit"
-                        class="btn btn-primary w-100">
-                        Sign Up
-                    </button>
+                    <button type="submit" class="btn btn-primary w-100">Sign Up</button>
 
                     <!-- Validation Message -->
-                    <p
-                        id="message"
-                        class="text-center mt-3">
-                    </p>
+                    <p id="message" class="text-center mt-3"></p>
 
                 </form>
 
             </div>
-
         </div>
-
     </main>
 
     <!-- Footer -->
     <footer class="bg-dark text-white text-center p-3">
-        <p class="mb-0">
-            &copy; 2026 Jason's Kicks. All rights reserved.
-        </p>
+        <p class="mb-0">&copy; 2026 Jason's Kicks. All rights reserved.</p>
     </footer>
 
     <!-- JavaScript -->
@@ -145,173 +98,89 @@
             const confirmPassword = document.getElementById("confirmPassword");
             const message = document.getElementById("message");
 
-            // Keep track of whether the form is valid
-            let formIsValid = true;
-
-            // Reset message
+            // Reset colors
+            username.style.color = "";
+            email.style.color = "";
+            password.style.color = "";
+            confirmPassword.style.color = "";
             message.textContent = "";
 
-            // Reset all error styles
-            username.classList.remove("error");
-            email.classList.remove("error");
-            password.classList.remove("error");
-            confirmPassword.classList.remove("error");
-
-
-            // -------------------------
-            // Check Username
-            // -------------------------
-
-            if (
-                username.value.trim() === "" ||
-                username.value === "Field is required"
-            ) {
-
+            // Check username
+            if (username.value.trim() === "") {
                 username.value = "Field is required";
-                username.classList.add("error");
-
-                formIsValid = false;
+                username.style.color = "red";
+                return;
             }
 
-
-            // -------------------------
-            // Check Email
-            // -------------------------
-
-            if (
-                email.value.trim() === "" ||
-                email.value === "Field is required"
-            ) {
-
+            // Check email
+            if (email.value.trim() === "") {
                 email.value = "Field is required";
-                email.classList.add("error");
-
-                formIsValid = false;
+                email.style.color = "red";
+                return;
             }
 
             // Check email format
-            else if (
-                !email.value.includes("@") ||
-                !email.value.includes(".") ||
-                email.value === "Enter a valid email"
-            ) {
-
+            if (!email.value.includes("@") || !email.value.includes(".")) {
                 email.value = "Enter a valid email";
-                email.classList.add("error");
-
-                formIsValid = false;
+                email.style.color = "red";
+                return;
             }
 
-
-            // -------------------------
-            // Check Password
-            // -------------------------
-
-            if (
-                password.value.trim() === "" ||
-                password.value === "Field is required"
-            ) {
-
-                // Change to text so the error can be seen
+            // Check password
+            if (password.value.trim() === "") {
                 password.type = "text";
-
                 password.value = "Field is required";
-                password.classList.add("error");
-
-                formIsValid = false;
+                password.style.color = "red";
+                return;
             }
 
-
-            // -------------------------
-            // Check Confirm Password
-            // -------------------------
-
-            if (
-                confirmPassword.value.trim() === "" ||
-                confirmPassword.value === "Field is required"
-            ) {
-
-                // Change to text so the error can be seen
+            // Check confirm password
+            if (confirmPassword.value.trim() === "") {
                 confirmPassword.type = "text";
-
                 confirmPassword.value = "Field is required";
-                confirmPassword.classList.add("error");
-
-                formIsValid = false;
+                confirmPassword.style.color = "red";
+                return;
             }
 
-
-            // -------------------------
-            // Check if Passwords Match
-            // -------------------------
-
-            if (
-                password.value !== "Field is required" &&
-                confirmPassword.value !== "Field is required" &&
-                password.value !== confirmPassword.value
-            ) {
-
-                password.classList.add("error");
-                confirmPassword.classList.add("error");
-
+            // Check if passwords match
+            if (password.value !== confirmPassword.value) {
                 message.textContent = "Passwords do not match!";
                 message.style.color = "red";
-
-                formIsValid = false;
+                return;
             }
 
-
-            // -------------------------
-            // Everything is Correct
-            // -------------------------
-
-            if (formIsValid === true) {
-
-                message.textContent = "Form validated successfully!";
-                message.style.color = "green";
-            }
-
+            // Everything is correct
+            message.textContent = "Form validated successfully!";
+            message.style.color = "green";
         });
 
 
-        // ------------------------------------
-        // Reset error when user clicks a field
-        // ------------------------------------
-
+        // Reset red text when the user goes back to fix a field
         document.querySelectorAll(".form-control").forEach(function(field) {
 
             field.addEventListener("focus", function() {
 
-                // Remove error text
-                if (
-                    field.value === "Field is required" ||
-                    field.value === "Enter a valid email"
-                ) {
-
+                // Remove error message from the textbox
+                if (field.value === "Field is required" ||
+                    field.value === "Enter a valid email") {
                     field.value = "";
                 }
 
-                // Remove red text and red border
-                field.classList.remove("error");
+                // Reset text color
+                field.style.color = "";
 
                 // Change password fields back to password type
-                if (
-                    field.id === "password" ||
-                    field.id === "confirmPassword"
-                ) {
-
+                if (field.id === "password" ||
+                    field.id === "confirmPassword") {
                     field.type = "password";
                 }
 
-                // Clear message underneath the form
+                // Clear the message underneath the form
                 document.getElementById("message").textContent = "";
-
             });
-
         });
 
     </script>
 
 </body>
-
 </html>
