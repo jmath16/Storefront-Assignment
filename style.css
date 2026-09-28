@@ -101,11 +101,3 @@ footer {
     text-align: center;
     padding: 20px;
 }
-
-
-/* Signup Form Error */
-
-.form-control.error {
-    border: 2px solid red !important;
-    color: red !important;
-}
