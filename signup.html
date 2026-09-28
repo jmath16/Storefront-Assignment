@@ -98,17 +98,24 @@
             const confirmPassword = document.getElementById("confirmPassword");
             const message = document.getElementById("message");
 
-            // Reset colors
+            // Reset colors and borders
             username.style.color = "";
             email.style.color = "";
             password.style.color = "";
             confirmPassword.style.color = "";
+
+            username.style.border = "";
+            email.style.border = "";
+            password.style.border = "";
+            confirmPassword.style.border = "";
+
             message.textContent = "";
 
             // Check username
             if (username.value.trim() === "") {
                 username.value = "Field is required";
                 username.style.color = "red";
+                username.style.border = "2px solid red";
                 return;
             }
 
@@ -116,6 +123,7 @@
             if (email.value.trim() === "") {
                 email.value = "Field is required";
                 email.style.color = "red";
+                email.style.border = "2px solid red";
                 return;
             }
 
@@ -123,6 +131,7 @@
             if (!email.value.includes("@") || !email.value.includes(".")) {
                 email.value = "Enter a valid email";
                 email.style.color = "red";
+                email.style.border = "2px solid red";
                 return;
             }
 
@@ -131,6 +140,7 @@
                 password.type = "text";
                 password.value = "Field is required";
                 password.style.color = "red";
+                password.style.border = "2px solid red";
                 return;
             }
 
@@ -139,11 +149,15 @@
                 confirmPassword.type = "text";
                 confirmPassword.value = "Field is required";
                 confirmPassword.style.color = "red";
+                confirmPassword.style.border = "2px solid red";
                 return;
             }
 
             // Check if passwords match
             if (password.value !== confirmPassword.value) {
+                password.style.border = "2px solid red";
+                confirmPassword.style.border = "2px solid red";
+
                 message.textContent = "Passwords do not match!";
                 message.style.color = "red";
                 return;
@@ -155,7 +169,7 @@
         });
 
 
-        // Reset red text when the user goes back to fix a field
+        // Reset red text and border when the user goes back to fix a field
         document.querySelectorAll(".form-control").forEach(function(field) {
 
             field.addEventListener("focus", function() {
@@ -168,6 +182,9 @@
 
                 // Reset text color
                 field.style.color = "";
+
+                // Reset border
+                field.style.border = "";
 
                 // Change password fields back to password type
                 if (field.id === "password" ||
