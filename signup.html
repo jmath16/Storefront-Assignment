@@ -49,6 +49,19 @@
                             placeholder="Enter username">
                     </div>
 
+                    <!-- Confirm Username -->
+                    <div class="mb-3">
+                        <label for="confirmUsername" class="form-label">
+                            Confirm Username:
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="confirmUsername"
+                            placeholder="Confirm username">
+                    </div>
+
                     <!-- Email -->
                     <div class="mb-3">
                         <label for="email" class="form-label">
@@ -88,7 +101,7 @@
                             placeholder="Confirm password">
                     </div>
 
-                    <!-- Validation message -->
+                    <!-- Validation Message -->
                     <p id="message"></p>
 
                     <!-- Submit Button -->
@@ -97,6 +110,12 @@
                     </button>
 
                 </form>
+
+                <!-- JSON Output -->
+                <div class="mt-4">
+                    <h3>User JSON Document</h3>
+                    <pre id="jsonOutput"></pre>
+                </div>
 
             </div>
         </div>
@@ -114,38 +133,67 @@
 
             // Get each input field
             const username = document.getElementById("username");
+            const confirmUsername = document.getElementById("confirmUsername");
             const email = document.getElementById("email");
             const password = document.getElementById("password");
             const confirmPassword = document.getElementById("confirmPassword");
             const message = document.getElementById("message");
+            const jsonOutput = document.getElementById("jsonOutput");
 
             // Keep track of whether the form is valid
             let isValid = true;
 
             // Reset all colors and borders before checking
             username.style.color = "";
+            confirmUsername.style.color = "";
             email.style.color = "";
             password.style.color = "";
             confirmPassword.style.color = "";
 
             username.style.borderColor = "";
+            confirmUsername.style.borderColor = "";
             email.style.borderColor = "";
             password.style.borderColor = "";
             confirmPassword.style.borderColor = "";
 
             message.textContent = "";
+            jsonOutput.textContent = "";
 
 
             // Check username
             if (username.value.trim() === "") {
 
                 username.value = "Field is required";
-
-                // Make text red
                 username.style.color = "red";
-
-                // Make border red
                 username.style.borderColor = "red";
+
+                isValid = false;
+            }
+
+
+            // Check confirm username
+            if (confirmUsername.value.trim() === "") {
+
+                confirmUsername.value = "Field is required";
+                confirmUsername.style.color = "red";
+                confirmUsername.style.borderColor = "red";
+
+                isValid = false;
+            }
+
+
+            // Check if usernames match
+            if (
+                username.value !== "Field is required" &&
+                confirmUsername.value !== "Field is required" &&
+                username.value !== confirmUsername.value
+            ) {
+
+                username.style.borderColor = "red";
+                confirmUsername.style.borderColor = "red";
+
+                message.textContent = "Usernames do not match!";
+                message.style.color = "red";
 
                 isValid = false;
             }
@@ -155,11 +203,7 @@
             if (email.value.trim() === "") {
 
                 email.value = "Field is required";
-
-                // Make text red
                 email.style.color = "red";
-
-                // Make border red
                 email.style.borderColor = "red";
 
                 isValid = false;
@@ -172,11 +216,7 @@
             ) {
 
                 email.value = "Enter a valid email";
-
-                // Make text red
                 email.style.color = "red";
-
-                // Make border red
                 email.style.borderColor = "red";
 
                 isValid = false;
@@ -190,11 +230,7 @@
                 password.type = "text";
 
                 password.value = "Field is required";
-
-                // Make text red
                 password.style.color = "red";
-
-                // Make border red
                 password.style.borderColor = "red";
 
                 isValid = false;
@@ -208,11 +244,7 @@
                 confirmPassword.type = "text";
 
                 confirmPassword.value = "Field is required";
-
-                // Make text red
                 confirmPassword.style.color = "red";
-
-                // Make border red
                 confirmPassword.style.borderColor = "red";
 
                 isValid = false;
@@ -226,11 +258,9 @@
                 password.value !== confirmPassword.value
             ) {
 
-                // Make both password borders red
                 password.style.borderColor = "red";
                 confirmPassword.style.borderColor = "red";
 
-                // Display error message
                 message.textContent = "Passwords do not match!";
                 message.style.color = "red";
 
@@ -244,6 +274,20 @@
                 message.textContent = "Form validated successfully!";
                 message.style.color = "green";
 
+                // Create the shopper object using the form values
+                const shopper = {
+                    username: username.value,
+                    confirmUsername: confirmUsername.value,
+                    email: email.value,
+                    password: password.value,
+                    confirmPassword: confirmPassword.value
+                };
+
+                // Convert the shopper object into JSON
+                const shopperJSON = JSON.stringify(shopper, null, 4);
+
+                // Display the JSON document on the web page
+                jsonOutput.textContent = shopperJSON;
             }
 
         });
