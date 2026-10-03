@@ -36,6 +36,19 @@
 
                 <form id="signupForm">
 
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">
+                            Email:
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="email"
+                            placeholder="Enter email">
+                    </div>
+
                     <!-- Username -->
                     <div class="mb-3">
                         <label for="username" class="form-label">
@@ -60,19 +73,6 @@
                             class="form-control"
                             id="confirmUsername"
                             placeholder="Confirm username">
-                    </div>
-
-                    <!-- Email -->
-                    <div class="mb-3">
-                        <label for="email" class="form-label">
-                            Email:
-                        </label>
-
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="email"
-                            placeholder="Enter email">
                     </div>
 
                     <!-- Password -->
@@ -132,11 +132,12 @@
             event.preventDefault();
 
             // Get each input field
+            const email = document.getElementById("email");
             const username = document.getElementById("username");
             const confirmUsername = document.getElementById("confirmUsername");
-            const email = document.getElementById("email");
             const password = document.getElementById("password");
             const confirmPassword = document.getElementById("confirmPassword");
+
             const message = document.getElementById("message");
             const jsonOutput = document.getElementById("jsonOutput");
 
@@ -144,20 +145,44 @@
             let isValid = true;
 
             // Reset all colors and borders before checking
+            email.style.color = "";
             username.style.color = "";
             confirmUsername.style.color = "";
-            email.style.color = "";
             password.style.color = "";
             confirmPassword.style.color = "";
 
+            email.style.borderColor = "";
             username.style.borderColor = "";
             confirmUsername.style.borderColor = "";
-            email.style.borderColor = "";
             password.style.borderColor = "";
             confirmPassword.style.borderColor = "";
 
             message.textContent = "";
             jsonOutput.textContent = "";
+
+
+            // Check email
+            if (email.value.trim() === "") {
+
+                email.value = "Field is required";
+                email.style.color = "red";
+                email.style.borderColor = "red";
+
+                isValid = false;
+            }
+
+            // Check email format
+            else if (
+                !email.value.includes("@") ||
+                !email.value.includes(".")
+            ) {
+
+                email.value = "Enter a valid email";
+                email.style.color = "red";
+                email.style.borderColor = "red";
+
+                isValid = false;
+            }
 
 
             // Check username
@@ -194,30 +219,6 @@
 
                 message.textContent = "Usernames do not match!";
                 message.style.color = "red";
-
-                isValid = false;
-            }
-
-
-            // Check email
-            if (email.value.trim() === "") {
-
-                email.value = "Field is required";
-                email.style.color = "red";
-                email.style.borderColor = "red";
-
-                isValid = false;
-            }
-
-            // Check email format
-            else if (
-                !email.value.includes("@") ||
-                !email.value.includes(".")
-            ) {
-
-                email.value = "Enter a valid email";
-                email.style.color = "red";
-                email.style.borderColor = "red";
 
                 isValid = false;
             }
@@ -271,29 +272,43 @@
             // If everything is correct
             if (isValid) {
 
+                // Display success message
                 message.textContent = "Form validated successfully!";
                 message.style.color = "green";
 
-                // Create the shopper object using the form values
+                // Make all input borders green
+                email.style.borderColor = "green";
+                username.style.borderColor = "green";
+                confirmUsername.style.borderColor = "green";
+                password.style.borderColor = "green";
+                confirmPassword.style.borderColor = "green";
+
+
+                // Create shopper object using form values
                 const shopper = {
+
+                    email: email.value,
                     username: username.value,
                     confirmUsername: confirmUsername.value,
-                    email: email.value,
                     password: password.value,
                     confirmPassword: confirmPassword.value
+
                 };
+
 
                 // Convert the shopper object into JSON
                 const shopperJSON = JSON.stringify(shopper, null, 4);
 
-                // Display the JSON document on the web page
+
+                // Display JSON document on the page
                 jsonOutput.textContent = shopperJSON;
+
             }
 
         });
 
 
-        // Reset error when the user clicks back into a field
+        // Reset errors when the user clicks back into a field
         document.querySelectorAll(".form-control").forEach(function(field) {
 
             field.addEventListener("focus", function() {
@@ -303,7 +318,9 @@
                     field.value === "Field is required" ||
                     field.value === "Enter a valid email"
                 ) {
+
                     field.value = "";
+
                 }
 
                 // Reset text color
@@ -317,10 +334,12 @@
                     field.id === "password" ||
                     field.id === "confirmPassword"
                 ) {
+
                     field.type = "password";
+
                 }
 
-                // Clear message
+                // Clear validation message
                 document.getElementById("message").textContent = "";
 
             });
